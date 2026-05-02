@@ -1,0 +1,44 @@
+{
+  "name": "Parvaz Pulse",
+  "short_name": "Parvaz",
+  "description": "Your mindful focus companion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FEFBF8",
+  "theme_color": "#a78bfa",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["productivity", "lifestyle", "health"],
+  "prefer_related_applications": false,
+  "screenshots": []
+}
