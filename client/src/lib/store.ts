@@ -136,9 +136,20 @@ export function getTodayEntry(): DayEntry {
   let entry = entries.find((e) => e.date === today);
 
   if (!entry) {
+    // Get yesterday's date
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    
+    // Find yesterday's entry
+    const yesterdayEntry = entries.find((e) => e.date === yesterdayStr);
+    
+    // Use yesterday's values as defaults, or empty if no yesterday entry
+    const defaultReflection = yesterdayEntry?.nightReflection || {};
+    
     entry = {
       date: today,
-      nightReflection: {},
+      nightReflection: { ...defaultReflection },
       notes: '',
       isUserEntered: false,
     };
@@ -172,6 +183,23 @@ export function saveEntry(entry: DayEntry): void {
   }
 
   localStorage.setItem(STORAGE_KEYS.ENTRIES, JSON.stringify(entries));
+}
+
+// Reset today's entry to defaults
+export function resetTodayEntry(): void {
+  const entries = getAllEntries();
+  const today = getTodayDate();
+  const index = entries.findIndex((e) => e.date === today);
+
+  if (index >= 0) {
+    entries[index] = {
+      date: today,
+      nightReflection: {},
+      notes: '',
+      isUserEntered: false,
+    };
+    localStorage.setItem(STORAGE_KEYS.ENTRIES, JSON.stringify(entries));
+  }
 }
 
 // Get mood description based on emotional state
@@ -374,7 +402,7 @@ export function getLastSaveTime(): string {
 // ── Firebase sync ─────────────────────────────────────────────────────────────
 import { saveAllToFirestore, loadAllFromFirestore } from './firebase';
 
-const KEYS = ['parvaz-entries', 'parvaz-settings', 'parvaz-experiments', 'parvaz-mood-canvas'];
+const KEYS = [STORAGE_KEYS.ENTRIES, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.EXPERIMENTS, STORAGE_KEYS.MOOD_CANVAS, STORAGE_KEYS.BRAIN_DUMPS, STORAGE_KEYS.SOS_LOG];
 let _fbTimer: ReturnType<typeof setTimeout> | null = null;
 
 export function syncAllToFirestore(): void {

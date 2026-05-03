@@ -12,6 +12,7 @@ import {
   clearAllBrainDumps,
   incrementSOSCount,
   getTodaySOSCount,
+  resetTodayEntry,
   BrainDump,
 } from '@/lib/store';
 
@@ -67,6 +68,11 @@ export default function ResetMind() {
   const handleClearAll = () => {
     clearAllBrainDumps();
     setBrainDumps([]);
+  };
+
+  const handleResetMentalState = () => {
+    resetTodayEntry();
+    toast.success('Mental state reset. Start fresh.');
   };
 
   const startBreathing = () => {
@@ -166,9 +172,14 @@ export default function ResetMind() {
                 </div>
               ))}
             </div>
-            <Button variant="outline" onClick={handleClearAll} className="rounded-xl">
-              Clear all dumps
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={handleClearAll} className="rounded-xl">
+                Clear all dumps
+              </Button>
+              <Button variant="outline" onClick={handleResetMentalState} className="rounded-xl">
+                Reset mental state
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
